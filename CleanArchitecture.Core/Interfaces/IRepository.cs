@@ -9,8 +9,10 @@ namespace CleanArchitecture.Core.Interfaces
 
         ValueTask<IEnumerable<TEntity>> ReadAll();
 
-        ValueTask<TEntity> UpdtaeAsync(TEntity entity);
-        ValueTask DeleteAsync(TEntity entity);
+        void  UpdtaeAsync(TEntity entity);
+        ValueTask DeleteAsync(string entityId);
+
+        int SaveChanges();
 
 
     }

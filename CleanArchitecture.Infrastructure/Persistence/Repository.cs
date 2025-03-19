@@ -1,33 +1,59 @@
-﻿using CleanArchitecture.Core.Interfaces
+﻿using CleanArchitecture.Core.Interfaces;
 
+
+using CleanArchitecture.Infrastructure.Persistence.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Infrastructure.Persistence
 {
     class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        public ValueTask<TEntity> AddAsync(TEntity entity)
+
+        private ApplicationDbContext _context = null;
+        private DbSet<TEntity> _entity;
+
+        public Repository(ApplicationDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+            _entity = _context.Set<TEntity>();
+            
+        }
+        public async ValueTask<TEntity> AddAsync(TEntity entity)
+        {
+            await _entity.AddAsync(entity);
+            return entity;
         }
 
-        public ValueTask DeleteAsync(TEntity entity)
+        public async ValueTask<TEntity> Read(string EntityId)
         {
-            throw new NotImplementedException();
+            return await _entity.FindAsync(EntityId);
         }
 
-        public ValueTask<TEntity> Read(string EntityId)
+        public async  ValueTask<IEnumerable<TEntity>> ReadAll()
         {
-            throw new NotImplementedException();
+            return await _entity.ToListAsync();
+
         }
 
-        public ValueTask<IEnumerable<TEntity>> ReadAll()
+
+        public  void  UpdtaeAsync(TEntity entity)
         {
-            throw new NotImplementedException();
+            _entity.Attach(entity);
         }
 
-        public ValueTask<TEntity> UpdtaeAsync(TEntity entity)
+        public async ValueTask DeleteAsync(string entityId)
         {
-            throw new NotImplementedException();
+            var oData = await _entity.FindAsync(entityId);
+            _entity.Remove(oData);
+
+        }
+
+         public int SaveChanges()
+        {
+            return _context.SaveChanges();
         }
     }
 }
+
+
+// valueTask = task more performant than task
