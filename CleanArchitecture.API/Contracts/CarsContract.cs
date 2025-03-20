@@ -2,6 +2,7 @@
 {
     public class CarsContract
     {
+        public string CarName { get; set; } 
     }
     public class CarsOperationsContract
     {

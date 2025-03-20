@@ -6,9 +6,15 @@ namespace CleanArchitecture.Services
 {
     public class CarsServices : ICarServices
     {
-        public ValueTask<Cars> Create(Cars car)
+
+        private readonly IRepository<Cars> _repository;
+        public CarsServices(IRepository<Cars> repository)
         {
-            throw new NotImplementedException();
+            _repository = repository;
+        }
+        public async ValueTask<Cars> Create(Cars car)
+        {
+            return await _repository.AddAsync(car);
         }
 
     }

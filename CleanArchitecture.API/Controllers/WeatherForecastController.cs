@@ -1,3 +1,5 @@
+using CleanArchitecture.API.Contracts;
+using CleanArchitecture.Core.Entities;
 using CleanArchitecture.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,10 +18,10 @@ public class WeatherForecastController : ControllerBase
     private readonly ILogger<WeatherForecastController> _logger;
 
 
-    private readonly IRepository ;
+    private readonly ICarServices _services;
 
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    public WeatherForecastController(ILogger<WeatherForecastController> logger )
     {
         _logger = logger;
     }
@@ -37,16 +39,21 @@ public class WeatherForecastController : ControllerBase
     }
 
     [HttpPost("/testing")]
-
-    public ActionResult CreateNew([FromBody] TestingModel )
+    public async Task<IActionResult> CreateNew([FromBody] CarsOperationsContract  model )
     {
-        return 
+        var oDataModel = new Cars()
+        {
+            Carname = model.CarName
+        };
+        var oResult = await _services.Create(oDataModel);
+        var oDataResult = new CarsContract()
+        {
+            CarName = oResult.Carname
+        };
+        return Ok(oResult);
 
     }
 
 
-    public class TestingModel
-    {
-
-    }
+ 
 }
