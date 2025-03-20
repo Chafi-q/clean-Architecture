@@ -1,3 +1,4 @@
+using CleanArchitecture.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitecture.API.Controllers;
@@ -11,7 +12,12 @@ public class WeatherForecastController : ControllerBase
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
 
+
     private readonly ILogger<WeatherForecastController> _logger;
+
+
+    private readonly IRepository ;
+
 
     public WeatherForecastController(ILogger<WeatherForecastController> logger)
     {
@@ -28,5 +34,19 @@ public class WeatherForecastController : ControllerBase
             Summary = Summaries[Random.Shared.Next(Summaries.Length)]
         })
         .ToArray();
+    }
+
+    [HttpPost("/testing")]
+
+    public ActionResult CreateNew([FromBody] TestingModel )
+    {
+        return 
+
+    }
+
+
+    public class TestingModel
+    {
+
     }
 }

@@ -24,22 +24,17 @@ namespace CleanArchitecture.Infrastructure.Persistence
             return entity;
         }
 
-        public async ValueTask<TEntity> Read(string EntityId)
-        {
-            return await _entity.FindAsync(EntityId);
-        }
-
-        public async  ValueTask<IEnumerable<TEntity>> ReadAll()
-        {
-            return await _entity.ToListAsync();
-
-        }
+        public async ValueTask<TEntity> Read(string EntityId) => 
+            await _entity.FindAsync(EntityId);
 
 
-        public  void  UpdtaeAsync(TEntity entity)
-        {
-            _entity.Attach(entity);
-        }
+        public async  ValueTask<IEnumerable<TEntity>> ReadAll() =>
+            await _entity.ToListAsync();
+
+
+        public  void  UpdtaeAsync(TEntity entity) =>
+             _entity.Attach(entity);
+
 
         public async ValueTask DeleteAsync(string entityId)
         {
@@ -48,12 +43,12 @@ namespace CleanArchitecture.Infrastructure.Persistence
 
         }
 
-         public int SaveChanges()
-        {
-            return _context.SaveChanges();
-        }
+         public int SaveChanges() =>
+            _context.SaveChanges();
     }
 }
 
 
 // valueTask = task more performant than task
+
+// one line method ===> lambda expression by deleting { return "" }

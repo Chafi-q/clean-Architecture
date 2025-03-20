@@ -14,4 +14,8 @@
     <Folder Include="aggregates\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CleanArchitecture.Core\CleanArchitecture.Core.csproj" />
+  </ItemGroup>
+
 </Project>
